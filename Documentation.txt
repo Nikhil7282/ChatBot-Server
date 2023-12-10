@@ -1,0 +1,27 @@
+This is a AI REal-Time Chatbot application which is similar to CHATGPT.
+
+Tech Stack (MERN)
+1)React
+2)Express JS
+3)MongoDB
+4)Node Js
+
+
+
+BACKEND
+
+Middleware :Express-validator
+
+Authentication :
+1)JWT ->Json web token
+2)Http Only Cookies(Cookies cannot be accessed by javascript)
+3)Cookie-Parser :Used to send token from backend to frontend 
+
+
+Database Model :
+user:
+    id(MONGO UNIQUE ID)
+    name(STRING)
+    email(STRING)
+    password(STRING)
+    chats:chat[](ARRAY)
