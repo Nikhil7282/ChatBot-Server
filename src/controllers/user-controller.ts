@@ -36,7 +36,7 @@ export const userSignUp = async (
       httpOnly: true,
       signed: true,
     });
-    return res.status(201).json({ message: "Success" });
+    return res.status(201).json({ message: "Success",name:newUser.name,email:newUser.email });
   } catch (error) {
     return res.status(200).json({ message: "Error", cause: error });
   }
@@ -73,7 +73,7 @@ export const userLogin = async (
       httpOnly: true,
       signed: true,
     });
-    return res.status(201).json({ message: "Success"});
+    return res.status(201).json({ message: "Success",name:User.name,email:User.email});
   } catch (error) {
     return res.status(200).json({ message: "Error", cause: error });
   }
