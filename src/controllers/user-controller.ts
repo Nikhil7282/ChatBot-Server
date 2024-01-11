@@ -36,7 +36,9 @@ export const userSignUp = async (
       httpOnly: true,
       signed: true,
     });
-    return res.status(201).json({ message: "Success",name:newUser.name,email:newUser.email });
+    return res
+      .status(201)
+      .json({ message: "Success", name: newUser.name, email: newUser.email });
   } catch (error) {
     return res.status(200).json({ message: "Error", cause: error });
   }
@@ -73,12 +75,13 @@ export const userLogin = async (
       httpOnly: true,
       signed: true,
     });
-    return res.status(201).json({ message: "Success",name:User.name,email:User.email});
+    return res
+      .status(201)
+      .json({ message: "Success", name: User.name, email: User.email });
   } catch (error) {
     return res.status(200).json({ message: "Error", cause: error });
   }
 };
-
 
 export const verifyUser = async (
   req: Request,
@@ -90,13 +93,40 @@ export const verifyUser = async (
     if (!User) {
       return res.status(401).send("User not registered or Token malfunctioned");
     }
-    if(User._id.toString()!==res.locals.jwtData.id){
-      return res.status(401).send("Permission didn't match")
+    if (User._id.toString() !== res.locals.jwtData.id) {
+      return res.status(401).send("Permission didn't match");
     }
-    return res.status(201).json({ message: "Success",name:User.name,email:User.email});
+    return res
+      .status(201)
+      .json({ message: "Success", name: User.name, email: User.email });
   } catch (error) {
     return res.status(200).json({ message: "Error", cause: error });
   }
 };
 
-
+export const userLogout = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const User = await user.findById(res.locals.jwtData.id);
+    if (!User) {
+      return res.status(401).send("User not registered or Token malfunctioned");
+    }
+    if (User._id.toString() !== res.locals.jwtData.id) {
+      return res.status(401).send("Permission didn't match");
+    }
+    res.clearCookie(Cookie_Name, {
+      path: "/",
+      domain: "localhost",
+      httpOnly: true,
+      signed: true,
+    });
+    return res
+      .status(201)
+      .json({ message: "Success", name: User.name, email: User.email });
+  } catch (error) {
+    return res.status(200).json({ message: "Error", cause: error });
+  }
+};
