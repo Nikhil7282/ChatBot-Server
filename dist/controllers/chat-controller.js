@@ -51,4 +51,23 @@ export const sendAllChats = async (req, res, next) => {
         return res.status(500).json({ message: "Something went wrong" });
     }
 };
+export const deleteChats = async (req, res, next) => {
+    try {
+        const User = await user.findById(res.locals.jwtData.id);
+        if (!User) {
+            return res.status(401).json({ message: "User Not Registered" });
+        }
+        if (User._id.toString() !== res.locals.jwtData.id) {
+            return res.status(401).json({ message: "Permission didn't match" });
+        }
+        //@ts-ignore
+        User.chats = [];
+        await User.save();
+        return res.status(200).json({ message: "OK" });
+    }
+    catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: "Something went wrong" });
+    }
+};
 //# sourceMappingURL=chat-controller.js.map
