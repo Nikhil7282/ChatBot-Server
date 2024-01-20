@@ -117,12 +117,11 @@ export const userLogout = async (
     if (User._id.toString() !== res.locals.jwtData.id) {
       return res.status(401).send("Permission didn't match");
     }
-    res.clearCookie(Cookie_Name, {
-      path: "/",
-      domain: "localhost",
-      httpOnly: true,
-      signed: true,
-    });
+    // res.cookie("token", "none", {
+    //   expires: new Date(Date.now() + 3 * 1000),
+    //   httpOnly: true,
+    // });
+    res.clearCookie(Cookie_Name);
     return res
       .status(201)
       .json({ message: "Success", name: User.name, email: User.email });
